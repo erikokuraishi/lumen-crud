@@ -41,3 +41,10 @@ $router->post('/posts', 'PostsController@store');
 $router->get('/post/{id}', 'PostsController@show');
 $router->put('/post/{id}', 'PostsController@update');
 $router->delete('/post/{id}', 'PostsController@destroy');
+
+// Product
+$router->get('/products', 'ProductsController@index');
+$router->post('/products', 'ProductsController@store');
+$router->get('/product/{id}', 'ProductsController@show');
+$router->put('/product/{id}', 'ProductsController@update');
+$router->delete('/product/{id}', 'ProductsController@destroy');

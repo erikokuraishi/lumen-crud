@@ -1,26 +1,69 @@
-# Lumen PHP Framework
+# Praktikum Lumen REST CRUD
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/lumen)](https://packagist.org/packages/laravel/lumen-framework)
+Nama: Ibrahim hanifa
+NIM: D112411052
+Mata kuliah: Interoperability (Web Service)
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+Project ini berisi dua CRUD berbasis Restful API dengan PHP Lumen:
+1. **Posts**: praktikum modul
+2. **Products**: tantangan (8 field + created_at dan updated_at)
 
-> **Note:** In the years since releasing Lumen, PHP has made a variety of wonderful performance improvements. For this reason, along with the availability of [Laravel Octane](https://laravel.com/docs/octane), we no longer recommend that you begin new projects with Lumen. Instead, we recommend always beginning new projects with [Laravel](https://laravel.com).
+## Endpoint Posts
 
-## Official Documentation
+| Method | Endpoint | Controller function |
+|---|---|---|
+| GET | /posts | index |
+| POST | /posts | store |
+| GET | /post/{id} | show |
+| PUT | /post/{id} | update |
+| DELETE | /post/{id} | destroy |
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+## Endpoint Products (Tantangan)
 
-## Contributing
+| Method | Endpoint | Controller function |
+|---|---|---|
+| GET | /products | index |
+| POST | /products | store |
+| GET | /product/{id} | show |
+| PUT | /product/{id} | update |
+| DELETE | /product/{id} | destroy |
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Struktur tabel products
 
-## Security Vulnerabilities
+| Field | Tipe |
+|---|---|
+| id | increments |
+| name | string |
+| sku | string |
+| description | text |
+| category | string |
+| brand | string |
+| price | unsigned integer |
+| stock | unsigned integer |
+| status | string |
+| created_at | timestamp |
+| updated_at | timestamp |
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+## Contoh request (POST /products)
 
-## License
+```json
+{
+    "name": "Kaos Polos",
+    "sku": "KS-001",
+    "description": "Kaos katun nyaman dipakai sehari-hari",
+    "category": "Pakaian",
+    "brand": "Uniqlo",
+    "price": 75000,
+    "stock": 20,
+    "status": "active"
+}
+```
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Cara menjalankan
+
+1. `composer install`
+2. Salin `.env.example` menjadi `.env`, lalu atur koneksi database (`DB_DATABASE=lumen_crud`)
+3. Buat database `lumen_crud`
+4. `php artisan migrate`
+5. `php -S localhost:8000 -t public`
+6. Tes lewat Postman di `http://localhost:8000`
