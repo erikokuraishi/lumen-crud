@@ -7,18 +7,41 @@ use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::orderBy("id", "DESC")->paginate(10);
+        $posts = Post::OrderBy("id", "DESC")->paginate(2)->toArray();
 
-        return response()->json($posts, 200);
+        $response = [
+            "total_count" => $posts["total"],
+            "limit"       => $posts["per_page"],
+            "pagination"  => [
+                "next_page"    => $posts["next_page_url"],
+                "current_page" => $posts["current_page"]
+            ],
+            "data" => $posts["data"],
+        ];
+
+        return response()->json($response, 200);
     }
 
     public function store(Request $request)
     {
         $input = $request->all();
-        $post = Post::create($input);
 
+        $validationRules = [
+            'title'   => 'required|min:5',
+            'content' => 'required|min:10',
+            'status'  => 'required|in:draft,published',
+            'user_id' => 'required|exists:users,id'
+        ];
+
+        $validator = \Validator::make($input, $validationRules);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+    }
+
+        $post = Post::create($input);
         return response()->json($post, 200);
     }
 
@@ -41,6 +64,18 @@ class PostsController extends Controller
 
         if (!$post) {
             abort(404);
+        }
+        $validationRules = [
+            'title'   => 'required|min:5',
+            'content' => 'required|min:10',
+            'status'  => 'required|in:draft,published',
+            'user_id' => 'required|exists:users,id'
+        ];
+
+        $validator = \Validator::make($input, $validationRules);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
         }
 
         $post->fill($input);
