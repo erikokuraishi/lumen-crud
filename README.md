@@ -44,6 +44,23 @@ Project ini berisi dua CRUD berbasis Restful API dengan PHP Lumen:
 | created_at | timestamp |
 | updated_at | timestamp |
 
+## Fitur Tambahan (Validation dan Error Handling)
+
+- Pagination pada `GET /posts` (response: `total_count`, `limit`, `pagination`, `data`)
+- Tabel `users` untuk validasi `user_id`
+- Validasi `POST /posts` dan `PUT /post/{id}`:
+
+| Field   | Aturan                                  |
+|---------|-----------------------------------------|
+| title   | wajib, minimal 5 karakter               |
+| content | wajib, minimal 10 karakter              |
+| status  | wajib, hanya `draft` atau `published`   |
+| user_id | wajib, harus ada di tabel `users`       |
+
+- Response error validasi: **400 Bad Request**
+- Error handling JSON untuk 404 (not found) dan 405 (method not allowed)
+  (set `APP_DEBUG=false` di `.env`)
+
 ## Contoh request (POST /products)
 
 ```json
